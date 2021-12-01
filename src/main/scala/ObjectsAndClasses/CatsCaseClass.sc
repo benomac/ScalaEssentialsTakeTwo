@@ -1,0 +1,1 @@
+case class Cats(colour: String, food: String)
