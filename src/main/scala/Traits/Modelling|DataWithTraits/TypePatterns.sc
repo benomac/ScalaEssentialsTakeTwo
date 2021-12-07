@@ -70,5 +70,13 @@ object ModellingDataWithTraits {
   final case class B() extends D
   final case class C() extends D
 
+  //Alternatively we could implementthis a A is a D or E, and D has a B
+  // and E has a C. Again this translates directly to code
+
+  // ex
+  sealed trait A
+  final case class D(b: B) extends A
+  final case class E(c: C) extends A
+
 
 }

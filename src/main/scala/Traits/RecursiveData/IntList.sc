@@ -3,6 +3,23 @@ import scala.annotation.tailrec
 sealed trait IntList {
   def getHead: Int
   def getTail: IntList
+
+  def sum: Int = this match {
+    case End => 0
+    case Pair(head, tail) => tail.sum + head
+  }
+
+  def product: Int = this match {
+    case End => 1
+    case Pair(head, tail) => tail.product * head
+  }
+
+  def double: IntList = this match {
+    case End => End
+    case Pair(head, tail) => Pair(head * 2, tail.double)
+  }
+
+
 }
 
 case object End extends IntList {
@@ -23,7 +40,6 @@ val b = Pair(2, c)
 val a = Pair(1, b)
 
 
-//implement all the below as trait methods not separate methods.
 @tailrec
 def createList(length: Int, acc: IntList = End): IntList = {
   if (length == 0) acc
@@ -32,11 +48,7 @@ def createList(length: Int, acc: IntList = End): IntList = {
 
 
 
-@tailrec
-def sum(intList: IntList, acc: Int = 0): Int = intList match {
-  case End => acc
-  case Pair(head, tail) => sum(tail, acc + head)
-}
+
 
 @tailrec
 def product(intList: IntList, acc: BigInt = 1): BigInt = intList match {
@@ -54,17 +66,14 @@ def listLength(intList: IntList, acc: Int = 0): Int = intList match {
 //  case End => acc
 //  case Pair(head, tail) => double(tail, Pair(head * 2, acc))
 //}
-def double: IntList =
-  this match {
-    case End => End
-    case Pair(hd, tl) => Pair(hd * 2, tl.double)
-  }
+//def double: IntList =
+//  this match {
+//    case End => End
+//    case Pair(hd, tl) => Pair(hd * 2, tl.double)
+//  }
 
 val list = Pair(1, Pair(2, Pair(3, End)))
 val list2 = createList(4)
-list.tail
+list.double
 
-list2.getTail
-End.getTail
-list2
-double(list)
+
