@@ -12,6 +12,10 @@ object Music {
       def extractPitchForChord(note: Note) =
         note.key.pitch.toUpperCase
 
+      def getSharpOrFlat(chord: ChordSeq) ={
+        chord.Head.value.sharpOrFlat.sharpOrFlat
+      }
+
       def noteToJson(noteCell: Note): String = noteCell.value.sharpOrFlat.sharpOrFlat match {
         case Some(Flat)  => s"${quote(noteCell.key.pitch.toUpperCase + "b")}:${noteProperties(noteCell.value)}"
         case Some(Sharp) => s"${quote(noteCell.key.pitch.toUpperCase + "#")}:${noteProperties(noteCell.value)}"
@@ -19,9 +23,14 @@ object Music {
       }
 
       def chordToJson(chord: ChordSeq): String = {
+        val pitch = getSharpOrFlat(chord) match {
+          case Some(Flat) => "b"
+          case Some(Sharp) => "#"
+          case None => ""
+        }
         chord match {
-          case ChordSeq(h, t @ ChordSeq(_, _)) => s"${noteToJson(h)}, ${chordToJson(t)}"
-          case ChordSeq(h, ChordEnd) => noteToJson(h)
+          case ChordSeq(h, t @ ChordSeq(_, _)) => s"${extractPitchForChord(h)}${pitch}, ${chordToJson(t)}"
+          case ChordSeq(h, ChordEnd) => extractPitchForChord(h)
         }
       }
 
@@ -39,7 +48,6 @@ object Music {
           case Some(Sharp) => s"{ ${quote(extractPitchForChord(h).toUpperCase + "#")}:  { ${chordToJson(c)} } }"
           case None        => s"{ ${quote(extractPitchForChord(h).toUpperCase())}    :  { ${chordToJson(c)} } }"
         }
-        case nc @ Note(_, _) => noteToJson(nc)
       }
 
     }
@@ -72,9 +80,10 @@ object Music {
   val E = Note(key = Pitch("e"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
   val F = Note(key = Pitch("f"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
 
-  val chordA = ChordSeq(A_#, ChordSeq(C, ChordSeq(E,  ChordSeq(F, ChordEnd))))
+  val chordA = ChordSeq(A_#, ChordSeq(C, ChordSeq(E, ChordEnd)))
 }
 Music.A_#.print
-
 Music.chordA.print
+
+
 
