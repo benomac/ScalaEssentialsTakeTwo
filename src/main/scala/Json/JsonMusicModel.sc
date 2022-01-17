@@ -50,9 +50,9 @@ object Music {
         case SharpOrFlat(sharpOrFlat) => if(sharpOrFlat.isEmpty) "" else quote(sharpOrFlat.get.toString)
         case n @ Note(_, _) => s"{ ${noteToJson(n)} }"
         case c @ ChordSeqBuilder(h, t) => (h.value.sharpOrFlat.sharpOrFlat, t) match {
-          case (Some(Flat), _) => s"{ ${quote(extractPitch(h).toUpperCase + "b")}:  [ ${chordToJson(c)} ] }"
-          case (Some(Sharp), _) => s"{ ${quote(extractPitch(h).toUpperCase + "#")}:  [ ${chordToJson(c)} ] }"
-          case (None, _)       => s"{ ${quote(extractPitch(h).toUpperCase())}    :  [ ${chordToJson(c)} ] }"
+          case (Some(Flat), _) => s"{ ${quote(extractPitch(h).toUpperCase + "b")}: [ ${chordToJson(c)} ] }"
+          case (Some(Sharp), _) => s"{ ${quote(extractPitch(h).toUpperCase + "#")}: [ ${chordToJson(c)} ] }"
+          case (None, _)       => s"{ ${quote(extractPitch(h).toUpperCase())} : [ ${chordToJson(c)} ] }"
         }
       }
 
@@ -88,9 +88,12 @@ object Music {
 
 
   val A = Note(key = Pitch("A"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
+  val B = Note(key = Pitch("B"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
   val C = Note(key = Pitch("C"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
+  val D = Note(key = Pitch("D"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
   val E = Note(key = Pitch("E"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
   val F = Note(key = Pitch("F"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
+  val G = Note(key = Pitch("G"), NoteProperties(Octave(1), Duration(1.0), SharpOrFlat(None)))
 
   val chordA = ChordSeqBuilder(A, ChordSeqBuilder(C, ChordSeqBuilder(E, ChordEnd)))
 
