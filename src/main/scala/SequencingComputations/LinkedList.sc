@@ -1,9 +1,5 @@
-object LinkedList {
-
-
-
-
-  sealed trait Result[A]
+object LinkedLists {
+sealed trait Result[A]
   case class Success[A](result: A) extends Result[A]
   case class Failure[A](reason: String) extends Result[A]
 
@@ -27,28 +23,38 @@ object LinkedList {
 //      case Pair(head, tail) => if (n == acc) head else tail.apply(n, acc + 1)
 //      case End() => throw new Exception("Bad things happened")
 //    }
-def apply(index: Int): Result[A] =
-  this match {
-    case Pair(hd, tl) =>
-      if(index == 0)
-        Success(hd)
-      else
-        tl.apply(index - 1) // Don't have to HAVE to have the `apply` here
-    case End() =>
-      Failure("Index out of bounds")
-  } }
-
-  final case class Pair[A](head: A, tail: LinkedList[A]) extends LinkedList[A] {
-   }
-
-  final case class End[A]() extends LinkedList[A] {
+def getIndex(index: Int): Result[A]
+//=
+//  this match {
+//    case Pair(hd, tl) =>
+//      if(index == 0)
+//        Success(hd)
+//      else
+//        tl.apply(index - 1) // Don't have to HAVE to have the `apply` here
+//    case End() =>
+//      Failure("Index out of bounds")
+//  }
   }
 
+  final case class Pair[A](head: A, tail: LinkedList[A]) extends LinkedList[A] {
+    override def getIndex(index: Int): Result[A] =
+      if(index == 0)
+            Success(head)
+          else
+            tail.getIndex(index - 1) // Don't have to HAVE to have the `apply` here
+
+  }
+
+  final case class End[A]() extends LinkedList[A] {
+    override def getIndex(index: Int): Result[A] =
+      Failure("Index out of bounds")
+      }
+  }
+import LinkedLists._
 
   val stringList = Pair("hello", Pair("ben", End()))
   val intList = Pair(1, Pair(2, Pair(3, End())))
-  }
 
-LinkedList.intList(0)
-LinkedList.intList.apply(0) // Same as line 51
-LinkedList.stringList.apply(5)
+
+intList.getIndex(9)
+

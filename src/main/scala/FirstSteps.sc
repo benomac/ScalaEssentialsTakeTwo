@@ -1,4 +1,4 @@
-import ObjectsAndClasses.Alien
+
 
 "hello world"
 
@@ -9,8 +9,8 @@ import ObjectsAndClasses.Alien
 1 + 2
 "3".toInt
 
-"ehllo" take 2
-"ehllo".take(2)
+"hello" take 2
+"hello".take(2)
 "Hello my name is Ben".split(" ").toList.head
 "foo" take 1
 
