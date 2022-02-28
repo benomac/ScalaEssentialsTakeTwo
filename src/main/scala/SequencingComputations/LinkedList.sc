@@ -10,6 +10,11 @@ sealed trait Result[A]
       case End() => 0
     }
 
+    def listToString: String = this match {
+      case Pair(head, tail) => head.toString + tail.listToString
+      case End() => ""
+    }
+
     def contains(thing: A): Boolean = this match {
       case Pair(head, tail) =>
         if (thing == head) true
@@ -23,7 +28,7 @@ sealed trait Result[A]
 //      case Pair(head, tail) => if (n == acc) head else tail.apply(n, acc + 1)
 //      case End() => throw new Exception("Bad things happened")
 //    }
-def getIndex(index: Int): Result[A]
+  def getIndex(index: Int): Result[A]
 //=
 //  this match {
 //    case Pair(hd, tl) =>
@@ -56,5 +61,6 @@ import LinkedLists._
   val intList = Pair(1, Pair(2, Pair(3, End())))
 
 
-intList.getIndex(9)
+
+println(intList.listToString)
 

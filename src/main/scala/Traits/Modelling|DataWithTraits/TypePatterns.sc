@@ -32,7 +32,7 @@ object ModellingDataWithTraits {
   }
 
 
-  // The Sum Type Pattern
+  // The SUM Type Pattern
   // "is-a or"
   // Our next pattern is to model data that is two or more distinct cases.
   // We might describe this as "A is a B or C". For example, a Feline is a Cat, Lion, or Tiger;
