@@ -69,6 +69,7 @@ println(newTree.fold[Tree[Int]]((a, b) => Node(a, b), int => Leaf(int * 2)))
 println(newStringTree.fold[Tree[String]]((a, b) => Node(a, b), str => Leaf(str + str)))
 println(tree.fold[String]((a, b) => s"$a $b", str => str))
 println(tree.fold[String]((a, b) => s"$a $b", str => str.toUpperCase()))
+println(tree.fold[String]((a, b) => s"$a $b", str => str.toList.map(x => x.toInt).mkString))
 
 //def double(tree: Tree): Tree = tree match {
 //  case Node(left, right) => Node(left.double, right.double)
